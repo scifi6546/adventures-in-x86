@@ -31,8 +31,8 @@ times 510-($-$$) db 0
 dw 0xaa55
 ```
 ## Next compile
-	compile with: ```nasm main.asm -f bin -o out```
-	finally run in a virtual machine with 
-	qemu-system-x86_64 -fda out
-	you should then see Hello World printed over and over again
+compile with: ```nasm main.asm -f bin -o out```
+finally run in a virtual machine with 
+qemu-system-x86_64 -fda out
+you should then see Hello World printed over and over again
 
