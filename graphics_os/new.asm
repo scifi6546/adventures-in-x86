@@ -6,16 +6,15 @@ start:
 	mov cx,0
 	mov dx,0
 	mov si,0
+	mov ax,0
 	loop:
-		mov ax,0xA000;writing to data segment
+		push ax
+		mov ax,0xB000;writing to data segment
 		mov ds,ax;writing to data segment
-		mov al,0x5;setting color
+		pop ax
+		inc al;setting color
 		mov [si],al;writing to memory
 		inc si
-		;call wrt_pixel
-		;cmp cx,0x10;checking if at edge of screen
-		;inc cx;increment collumn
-		;je add;start new row
 		jmp loop
 		add:
 			mov cx,0
