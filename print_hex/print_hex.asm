@@ -6,6 +6,9 @@ push ax
 pop ax
 push ax
     call print_al;printing lower 8 bits
+    mov ah,0x0e;tty mode
+    mov al,' ';printt new line
+    int 0x10;print to tty
 pop ax
 ret
 
@@ -13,12 +16,13 @@ ret
 
 print_al:
     mov ah,0x0e;tty mode
+    ;printing upper 4 bytes
     push ax
-        shr al,4
+        shr al,4;shifting down
         call print_4_bits
     pop ax
     push ax
-        and al,0x0F
+        and al,0x0F;getting lower 4 bits
         call print_4_bits
     pop ax
     ret
@@ -34,7 +38,7 @@ print_al:
             add al,55
             int 0x10
             ret
-;prints hex_str at ax until reaches bx
+;prints hex_str at ds:ax until reaches bx
 print_hex_str:
     cmp ax,bx
     je exit
@@ -45,7 +49,8 @@ print_hex_str:
         call print_hex
     pop bx
     pop ax
-    inc ax
+    add ax,2
+    ;printing space
     jmp print_hex_str
 
 exit:
