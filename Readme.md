@@ -162,6 +162,15 @@ ret
 
 ## Memory Operations
 
+In real mode x86 a single register can not index the full 1 MB of address
+space. Inorder to access memory two registers are used for indexing.
+The accessed index is calculated with the following formula.
+
+```
+address=OFFSET<<4+register
+```
+The offset register can be ES,DS,SS,and CS.
 ## Interrupts
 
-## Interrupt Vector Table
+Interrupts are events than can be triggerd by hardware or software using
+the ```int``` instruction. The address of the executed code is stored in the Interrupt vector table. 
