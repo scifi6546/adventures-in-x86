@@ -1,0 +1,6 @@
+[org 0x2000]
+loop_a:
+mov ax,0x0e41
+int 0x10
+jmp loop_a
+times 0x400-($-$$) db 0
