@@ -4,21 +4,32 @@ start:
     mov ax,cs
     mov es,ax
     mov bx,disk_end
-    mov al,0x1a
+ 
+    mov al,0x1c
     call disk_load
     mov ax,code_start
-    call print_hex
     mov ax,0x0
     call load_prg
-    
     mov bx,0x1c
-    call print_hex
+    
     mov ax,kernel_code
     call print_hex
-
     call register_interrupt
-   
-    jmp 0x2000
+    
+    mov ax,0x0
+    mov ds,ax
+    mov ax,0x2000
+    mov bx,0x2100
+   ; call print_hex_str
+    
+;
+ ;   initilize_kernel:
+ ;       ;pushes 0 to bx
+ ;       mov sp,0x1000
+ ;       push bx
+ ;       mov sp,0x2400
+    ;jmp kernel_code
+    jmp 0x2000;jump to client code
 %include "../print_hex/print_hex.asm"
 %include "../disk load/disk_load.asm"
 times 0x1fe-($-$$) db 0
@@ -26,23 +37,37 @@ dw 0xaa55
 
 disk_end: 
 %include "../interrupt/interrupt.asm"
-
-    kernel_code:
+kernel_code:
+    ;call print_hex
+    ;sti 
+    ;iret
+    sti
+    ;call print_hex
+    ;mov sp,0x1000
+    ;pop bx
     push ax
-        mov ax,bx
-        call print_hex
- 
-        and bx,0x01
-        xor bx,0x01;toggling first bit of bx
-        sti
-        call load_prg
 
-        mov ax,bx
+        ;picking random point in memory for now 0xa000
+        mov bx:0xa000
+        mov ax,[es:bx]
         call print_hex
-        sti
+        xor ax,0x01;toggling first bit of bx
+        and ax,0x01
+        mov [es:bx],ax
+        
+        ;sti
+        
+
+       ; mov ax,bx
+        ;call print_hex
+        call load_prg
+        ;call print_hex
+        ;sti
     pop ax
+    ;push bx
+    ;mov sp,0x2400
     iret
-;loads program id stored in al to 0x20000
+;loads program id stored in al to 0x2000
 load_prg:
     push ax
     push bx

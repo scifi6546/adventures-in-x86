@@ -1,3 +1,4 @@
+;registers data pointed to by ax at interrupt number bx
 register_interrupt:
     cli
     imul bx,0x4;getting address for interrupt
