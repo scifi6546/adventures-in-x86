@@ -23,12 +23,13 @@ start:
    ; call print_hex_str
     
 ;
- ;   initilize_kernel:
- ;       ;pushes 0 to bx
- ;       mov sp,0x1000
- ;       push bx
- ;       mov sp,0x2400
-    ;jmp kernel_code
+   initilize_kernel:
+       ;pushes 0 to bx
+       ;saving top of kernel stack
+       mov [0x5801],word 0x1000
+       mov sp,0x1000
+       push bx
+       mov sp,0x2400
     jmp 0x2000;jump to client code
 %include "../print_hex/print_hex.asm"
 %include "../disk load/disk_load.asm"
@@ -43,7 +44,8 @@ kernel_code:
     ;iret
     sti
     ;call print_hex
-    ;mov sp,0x1000
+    mov cx,sp;saving program stack
+    mov sp,[0x5801]
     ;pop bx
     push ax
 
@@ -65,7 +67,7 @@ kernel_code:
         ;sti
     pop ax
     ;push bx
-    ;mov sp,0x2400
+    mov sp,cx
     iret
 ;loads program id stored in al to 0x2000
 load_prg:

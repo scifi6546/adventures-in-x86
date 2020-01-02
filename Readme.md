@@ -170,6 +170,13 @@ The accessed index is calculated with the following formula.
 address=OFFSET<<4+register
 ```
 The offset register can be ES,DS,SS,and CS.
+inorder to set the offset registers the value has to be moved first into
+a general purpose register.
+```asm
+;this sets es to 0x10
+mov ax,0x10
+mov es,ax
+```
 ## Interrupts
 
 Interrupts are events than can be triggerd by hardware or software using
