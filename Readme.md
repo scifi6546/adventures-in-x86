@@ -198,7 +198,3 @@ inc bx
 mov ax,0x1
 mov [bx],ax
 ```
-mov 
-
-
-
