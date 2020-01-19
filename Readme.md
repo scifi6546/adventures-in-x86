@@ -180,4 +180,25 @@ mov es,ax
 ## Interrupts
 
 Interrupts are events than can be triggerd by hardware or software using
-the ```int``` instruction. The address of the executed code is stored in the Interrupt vector table. 
+the ```int``` instruction. The address of the executed code is stored in the Interrupt vector table.
+The interrupt vector table is in the first 1024 bytes of ram. Each address is a 32 bit address.
+here is a program to write address 0x11200 to interrupt 0 (system timer)
+
+``` asm
+;move 0 into the data segment
+mov ax,0
+mov ds,ax
+;address to write to
+mov bx,0
+;getting addresses set up
+mov ax,0x1200
+mov [bx],ax
+;writting to high bit
+inc bx
+mov ax,0x1
+mov [bx],ax
+```
+mov 
+
+
+
